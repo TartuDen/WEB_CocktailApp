@@ -2,3 +2,8 @@
     display: flex;
     justify-content: center;
 }
+
+/* Custom CSS to fix text color inside the collapsible widget */
+.collapse .card-body {
+    color: black; /* Change text color to black */
+}
