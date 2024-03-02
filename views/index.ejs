@@ -13,19 +13,34 @@
         <h1>Let's search something yummy to drink!</h1>
     </div>
     <div class="container">
-        <form action="/search" method="post">
-            <label for="coctail">Type the name of a cocktail here:</label>
-            <input type="text" name="coctail" id="coctail">
-            <button type="submit">Get it!</button>
+        <form class="row g-3" action="/search" method="post">
+            <div class="col-auto">
+                <label for="coctail" class="visually-hidden">Type the name of a cocktail here:</label>
+                <input type="text" class="form-control" id="coctail" name="coctail" placeholder="Type the name of a cocktail here">
+            </div>
+            <div class="col-auto">
+                <label for="category" class="visually-hidden">Select a category:</label>
+                <select class="form-select" id="category" name="category">
+                    <option value="general">General Search</option>
+                    <option value="/search.php?s=">cocktail name</option>
+                    <option value="/filter.php?i=">type of alcohol </option>
+                    <option value="/search.php?i=">look up ingredient </option>
+                </select>
+            </div>
+            <div class="col-auto">
+                <button type="submit" class="btn btn-primary mb-3">Get it!</button>
+            </div>
         </form>
+        
+        
     </div>
 
     <!-- Start of card container -->
-    <div class="container px-4 py-5" id="custom-cards">
+    <div class="container-fluid px-4 py-5" id="custom-cards">
         <div class="row row-cols-1 row-cols-lg-3 align-items-stretch g-4 py-5">
-            <% if (data !== null) { %>
-                <% Object.keys(data).forEach(category => { %>
-                    <% data[category].forEach((drink, index) => { %>
+            <% if (locals.err  === null) { %>
+                <% Object.keys(dataForClient).forEach(category => { %>
+                    <% dataForClient[category].forEach((drink, index) => { %>
                         <div class="col-lg-4">
                             <div class="card card-cover h-100 overflow-hidden text-bg-dark rounded-4 shadow-lg">
                                 <img src="<%= drink.strDrinkThumb %>" class="card-img-top" alt="Drink Image">
@@ -36,9 +51,8 @@
                                             <% ingredients.push(drink[property]); %>
                                         <% } %>
                                     <% }) %>
-
                                     <% Object.keys(drink).forEach(property => { %>
-                                        <% if (drink[property] !== null && property !== 'strDrinkThumb' && property !== "strCreativeCommonsConfirmed" && property !== "dateModified" && !property.includes('Measure') && !property.startsWith('strIngredient')) { %>
+                                        <% if (drink[property] !== null && property !== 'strDrinkThumb' && property !== "strCreativeCommonsConfirmed" && property !== "dateModified"  && !property.startsWith('strIngredient') && property !== 'strImageSource' && property !== 'strImageAttribution') { %>
                                             <% const propertyName = property.replace(/^str/, ''); %>
                                             <% if (propertyName === 'Instructions' || propertyName === 'InstructionsDE' || propertyName === 'InstructionsIT' || propertyName === "InstructionsES") { %>
                                                 <p class="pt-1 mt-1 mb-2 display-6 lh-1">
@@ -55,6 +69,11 @@
                                                         </div>
                                                     </div>
                                                 </p>
+                                            <% } else if (propertyName === 'Video') { %>
+                                                <p class="pt-1 mt-1 mb-2 display-6 lh-1">
+                                                    <strong><%= propertyName %></strong>: 
+                                                    <a href="<%= drink[property] %>" target="_blank"><%= drink[property] %></a>
+                                                </p>
                                             <% } else { %>
                                                 <p class="pt-1 mt-1 mb-2 display-6 lh-1">
                                                     <strong><%= propertyName %></strong>: <%= drink[property] %>
@@ -62,7 +81,7 @@
                                             <% } %>
                                         <% } %>
                                     <% }) %>
-                                    <% ingredients.sort(); %>
+
                                     <% if (ingredients.length > 0) { %>
                                         <p class="pt-1 mt-1 mb-2 display-6 lh-1">
                                             <strong>Ingredients:</strong>
@@ -78,7 +97,12 @@
                         </div>
                     <% }) %>
                 <% }) %>
-            <% } %>
+            <% }else{ %>
+                <div class="container">
+                    <h1><%= err  %></h1>
+                </div>
+
+                <% } %>
         </div>
     </div>
     <!-- End of card container -->
