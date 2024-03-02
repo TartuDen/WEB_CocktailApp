@@ -6,11 +6,8 @@ const port = 8080;
 const app = express();
 const baseUrl = "https://www.thecocktaildb.com/api/json/v1/1";
 const searchByLetter = "/search.php?f="
-const searchByName = "/search.php?s=";
-const searchByAlcohol = "/search.php?i="
 const searchByID = "/lookup.php?i="
 const randomSearch = "/random.php"
-const searchByIngredient  = "/filter.php?i="
 let dataForClient = null;
 let err = null;
 app.use(express.static("public"));
@@ -66,12 +63,15 @@ app.post("/search", async (req, res) => {
         try {
             dataForClient = await axios.get(baseUrl + category + formReq)
             dataForClient = dataForClient.data
+            if (dataForClient.drinks === null || dataForClient.ingredients === null || dataForClient.length === 0) {
+                // Throw an error to redirect to the catch block
+                throw new Error('Wrong input...');
+            }
 
         } catch(error) {
             err = error
         }
         
-
     }
     res.status(200).redirect("/");
 })
