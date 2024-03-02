@@ -1,6 +1,15 @@
-.container{
-    display: flex;
-    justify-content: center;
+/* Ensure proper width and centering of card container */
+.container-fluid {
+    padding-left: 15px;
+    padding-right: 15px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#custom-cards {
+    max-width: 75%; /* Adjust the maximum width as needed */
+    margin-top: 20px; /* Adjust the top margin as needed */
+    margin-bottom: 20px; /* Adjust the bottom margin as needed */
 }
 
 /* Custom CSS to fix text color inside the collapsible widget */
@@ -8,12 +17,6 @@
     color: black; /* Change text color to black */
 }
 
-li{
+li {
     font-size: 30px;
-}
-
-/* Custom CSS to control container width */
-#custom-cards {
-    max-width: 75%; /* Adjust the value as needed */
-    margin: 0 auto; /* Center the container */
 }
