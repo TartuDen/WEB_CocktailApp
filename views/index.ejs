@@ -15,7 +15,7 @@
 <body>
     <!-- Header Section -->
     <div class="container">
-        <h1>Let's search something yummy to drink!</h1>
+        <h1>Mix & Sip: Discover Delicious Cocktails</h1>
     </div>
 
     <!-- Search Form -->
@@ -44,7 +44,7 @@
     </div>
 
     <!-- Start of card container -->
-    <div class="container-fluid px-4 py-5" id="custom-cards">
+    <div class="container px-4 py-5" id="custom-cards">
         <div class="row row-cols-1 row-cols-lg-3 align-items-stretch g-4 py-5">
             <% if (locals.err===null && locals.dataForClient["drinks"]!==null) { %>
                 <!-- Loop through Drink Data -->
@@ -57,100 +57,107 @@
                                 <div class="d-flex flex-column h-100 p-5 pb-3 text-white text-shadow-1">
                                     <!-- Ingredients Section -->
                                     <% const ingredients=[]; %>
-                                    <% Object.keys(drink).forEach(property=> { %>
-                                        <% if (drink[property] !==null && property.startsWith('strIngredient')) { %>
-                                            <% ingredients.push(drink[property]); %>
-                                        <% } %>
-                                    <% }) %>
-                                    <!-- Properties Section -->
-                                    <% Object.keys(drink).forEach(property=> { %>
-                                        <% if (drink[property] !==null && property
-                                            !=='strDrinkThumb' && property
-                                            !=="strCreativeCommonsConfirmed" && property
-                                            !=="dateModified" &&
-                                            !property.startsWith('strIngredient') && property
-                                            !=='strImageSource' && property
-                                            !=='strImageAttribution' ) { %>
-                                            <% const propertyName=property.replace(/^str/, '' );
-                                                %>
-                                            <% if (propertyName==='Instructions' ||
-                                                propertyName==='InstructionsDE' ||
-                                                propertyName==='InstructionsIT' ||
-                                                propertyName==="InstructionsES" ) { %>
-                                                <!-- Instructions Section with Collapse -->
-                                                <p class="pt-1 mt-1 mb-2 display-6 lh-1">
-                                                    <button class="btn btn-info"
-                                                        type="button"
-                                                        data-bs-toggle="collapse"
-                                                        data-bs-target="#<%= propertyName %>Collapse<%= index %>"
-                                                        aria-expanded="false"
-                                                        aria-controls="<%= propertyName %>Collapse<%= index %>">
-                                                        <%= propertyName %>
-                                                    </button>
-                                                    <div class="collapse"
-                                                        id="<%= propertyName %>Collapse<%= index %>">
-                                                        <div class="card card-body">
-                                                            <%= drink[property] %>
-                                                        </div>
-                                                    </div>
-                                                </p>
-                                            <% } else if (propertyName==='Video' ) { %>
-                                                <!-- Video Section -->
-                                                <p
-                                                    class="pt-1 mt-1 mb-2 display-6 lh-1">
-                                                    <strong>
-                                                        <%= propertyName %>
-                                                    </strong>:
-                                                    <a href="<%= drink[property] %>"
-                                                        target="_blank">
-                                                        <%= drink[property] %>
-                                                    </a>
-                                                </p>
-                                            <% } else { %>
-                                                <!-- Other Property Section -->
-                                                <p
-                                                    class="pt-1 mt-1 mb-2 display-6 lh-1">
-                                                    <strong>
-                                                        <%= propertyName %>
-                                                    </strong>: <%= drink[property]
-                                                        %>
-                                                </p>
-                                            <% } %>
-                                        <% } %>
-                                    <% }) %>
-                                    <!-- Ingredients List Section -->
-                                    <% if (ingredients.length>0) { %>
-                                        <p
-                                            class="pt-1 mt-1 mb-2 display-6 lh-1">
-                                            <strong>Ingredients:</strong>
-                                            <ul>
-                                                <% ingredients.forEach((ingredient,
-                                                    index)=> {
-                                                    %>
-                                                    <li>
-                                                        <%= index
-                                                            + 1
-                                                            %>.
-                                                        <%= ingredient
-                                                            %>
-                                                    </li>
-                                                <% }) %>
-                                            </ul>
-                                        </p>
-                                    <% } %>
+                                        <% Object.keys(drink).forEach(property=> { %>
+                                            <% if (drink[property] !==null && property.startsWith('strIngredient')) { %>
+                                                <% ingredients.push(drink[property]); %>
+                                                    <% } %>
+                                                        <% }) %>
+                                                            <!-- Properties Section -->
+                                                            <% Object.keys(drink).forEach(property=> { %>
+                                                                <% if (drink[property] !==null && property
+                                                                    !=='strDrinkThumb' && property
+                                                                    !=="strCreativeCommonsConfirmed" && property
+                                                                    !=="dateModified" &&
+                                                                    !property.startsWith('strIngredient') && property
+                                                                    !=='strImageSource' && property
+                                                                    !=='strImageAttribution' &&
+                                                                    !property.includes("Measure")) { %>
+
+                                                                    <% const propertyName=property.replace(/^str/, '' );
+                                                                        %>
+                                                                        <% if (propertyName==='Instructions' ||
+                                                                            propertyName==='InstructionsDE' ||
+                                                                            propertyName==='InstructionsIT' ||
+                                                                            propertyName==="InstructionsES" ) { %>
+                                                                            <!-- Instructions Section with Collapse -->
+                                                                            <p class="pt-1 mt-1 mb-2 display-6 lh-1">
+                                                                                <button class="btn btn-info"
+                                                                                    type="button"
+                                                                                    data-bs-toggle="collapse"
+                                                                                    data-bs-target="#<%= propertyName %>Collapse<%= index %>"
+                                                                                    aria-expanded="false"
+                                                                                    aria-controls="<%= propertyName %>Collapse<%= index %>">
+                                                                                    <%= propertyName %>
+                                                                                </button>
+                                                                            <div class="collapse"
+                                                                                id="<%= propertyName %>Collapse<%= index %>">
+                                                                                <div class="card card-body">
+                                                                                    <%= drink[property] %>
+                                                                                </div>
+                                                                            </div>
+                                                                            </p>
+                                                                            <% } else if (propertyName==='Video' ) { %>
+                                                                                <!-- Video Section -->
+                                                                                <p
+                                                                                    class="pt-1 mt-1 mb-2 display-6 lh-1">
+                                                                                    <strong>
+                                                                                        <%= propertyName %>
+                                                                                    </strong>:
+                                                                                    <a href="<%= drink[property] %>"
+                                                                                        target="_blank">
+                                                                                        <%= drink[property] %>
+                                                                                    </a>
+                                                                                </p>
+                                                                                <% } else { %>
+                                                                                    <!-- Other Property Section -->
+                                                                                    <p
+                                                                                        class="pt-1 mt-1 mb-2 display-6 lh-1">
+                                                                                        <strong>
+                                                                                            <%= propertyName %>
+                                                                                        </strong>: <%= drink[property]
+                                                                                            %>
+                                                                                    </p>
+                                                                                    <% } %>
+                                                                                        <% } %>
+                                                                                            <% }) %>
+                                                                                                <!-- Ingredients List Section -->
+                                                                                                <% if
+                                                                                                    (ingredients.length>
+                                                                                                    0) { %>
+                                                                                                    <p
+                                                                                                        class="pt-1 mt-1 mb-2 display-6 lh-1">
+                                                                                                        <strong><em>Ingredients:</em></strong>
+                                                                                                    <ul>
+                                                                                                        <% ingredients.forEach((ingredient,
+                                                                                                            index)=> {
+                                                                                                            %>
+                                                                                                            <li>
+                                                                                                                <% index+
+                                                                                                                    1 %>
+                                                                                                                    <em>
+                                                                                                                        <%= drink["strMeasure"+index]
+                                                                                                                            %>
+                                                                                                                            <%=
+                                                                                                                                ingredient%>
+                                                                                                                    </em>
+                                                                                                            </li>
+                                                                                                            <% }) %>
+                                                                                                    </ul>
+                                                                                                    </p>
+                                                                                                    <% } %>
                                 </div>
                             </div>
                         </div>
-                    <% }) %>
-                <% }) %>
-            <% } else { %>
-                <!-- Error Message Section -->
-                <div class="container">
-                    <h1>
-                        <%= err %>
-                    </h1>
-                </div>
-            <% } %>
+                        <% }) %>
+                            <% }) %>
+                                <% } else { %>
+                                    <!-- Error Message Section -->
+                                    <div class="container">
+                                        <h1>
+                                            <%= err %>
+                                        </h1>
+                                    </div>
+                                    <% } %>
         </div>
     </div>
     <!-- End of card container -->

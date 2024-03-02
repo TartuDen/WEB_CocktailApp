@@ -8,3 +8,12 @@
     color: black; /* Change text color to black */
 }
 
+li{
+    font-size: 30px;
+}
+
+/* Custom CSS to control container width */
+#custom-cards {
+    max-width: 75%; /* Adjust the value as needed */
+    margin: 0 auto; /* Center the container */
+}
