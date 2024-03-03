@@ -26,7 +26,7 @@ getRandom();
 
 app.post("/search", async (req, res) => {
     err = null;
-    let formReq = req.body["coctail"];
+    let formReq = req.body["cocktail"];
     let category = req.body["category"];
     if (formReq.length === 1 && typeof formReq === 'string') {
         try {

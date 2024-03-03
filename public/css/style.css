@@ -1,3 +1,9 @@
+.container-top{
+    display: flex;
+    justify-content: center;
+    height: 10vh;
+    align-items:end;
+}
 /* Ensure proper width and centering of card container */
 .container-fluid {
     padding-left: 15px;
@@ -19,4 +25,13 @@
 
 li {
     font-size: 30px;
+}
+.hover-link {
+    color: white; /* Set text color to white */
+    font-size: 2rem; /* Set font size to 2em */
+    transition: color 0.3s ease; /* Add transition animation for color change */
+}
+
+.hover-link:hover {
+    color: rgb(188, 188, 188); /* Change text color to light gray on hover */
 }
