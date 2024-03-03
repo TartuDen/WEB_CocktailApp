@@ -1,7 +1,7 @@
 # Mix & Sip: Cocktail Discovery App
 
 Mix & Sip is a web application that allows users to discover delicious cocktail recipes. With a vast database of cocktails, users can search for recipes based on the cocktail name, type of alcohol, or specific ingredients. Mix & Sip provides a user-friendly interface for cocktail enthusiasts to explore and enjoy a wide variety of cocktail creations.
-![alt text](.\public\img\image.png)
+![alt text](\public\img\image.png)
 ## Table of Contents
 - [Installation](#installation)
 - [Usage](#usage)
