@@ -42,8 +42,9 @@ li {
 }
 .hover-link {
     color: white; /* Set text color to white */
-    font-size: 2rem; /* Set font size to 2em */
+    font-size: 1.5rem; /* Set font size to 2em */
     transition: color 0.3s ease; /* Add transition animation for color change */
+    text-decoration: none;
 }
 
 .hover-link:hover {

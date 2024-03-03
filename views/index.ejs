@@ -44,7 +44,7 @@
 
     <!-- Start of card container -->
     <div class="container px-4 py-5" id="custom-cards">
-        <div class="row row-cols-1 row-cols-lg-3 align-items-stretch g-4 py-5">
+        <div class="row row-cols-1 row-cols-lg-3 align-items-stretch g-4 py-5 justify-content-center">
             <% if (locals.err===null && locals.dataForClient["drinks"]!==null) { %>
                 <!-- Loop through Drink Data -->
                 <% Object.keys(dataForClient).forEach(category=> { %>
@@ -54,13 +54,6 @@
                             <div class="card card-cover h-100 overflow-hidden text-bg-dark rounded-4 shadow-lg">
                                 <img src="<%= drink.strDrinkThumb %>" class="card-img-top" alt="Drink Image">
                                 <div class="d-flex flex-column h-100 p-5 pb-3 text-white text-shadow-1">
-                                    <!-- Ingredients Section -->
-                                    <% const ingredients=[]; %>
-                                    <% Object.keys(drink).forEach(property=> { %>
-                                        <% if (drink[property] !==null && property.startsWith('strIngredient')) { %>
-                                            <% ingredients.push(drink[property]); %>
-                                        <% } %>
-                                    <% }) %>
                                     <!-- Properties Section -->
                                     <% Object.keys(drink).forEach(property=> { %>
                                         <% if (drink[property] !==null && property !=='strDrinkThumb' && property !=="strCreativeCommonsConfirmed" && property !=="dateModified" && !property.startsWith('strIngredient') && property !=='strImageSource' && property !=='strImageAttribution' && !property.includes("Measure")) { %>
@@ -106,17 +99,50 @@
                                             <% } %>
                                         <% } %>
                                     <% }) %>
+
+
+
                                     <!-- Ingredients List Section -->
-                                    <% if (ingredients.length>0) { %>
+                                    <% if (Object.keys(ingredients).length > 0) { %>
                                         <p class="pt-1 mt-1 mb-2 display-6 lh-1">
                                             <strong><em>Ingredients:</em></strong>
                                             <ul>
-                                                <% ingredients.forEach((ingredient, index)=> { %>
-                                                    <li><em><%= drink["strMeasure"+(index+1)] %> <%= ingredient %></em></li>
-
-                                                <% }) %>
+                                                <% Object.keys(ingredients).forEach(ingredientName => { %>
+                                                    <% const ingredient = ingredients[ingredientName][0]; %>
+                                                    <li>
+                                                        <p class="btn btn-link hover-link" data-bs-toggle="collapse" 
+                                                        data-bs-target="#<%= ingredientName %>Collapse" aria-expanded="false" 
+                                                        aria-controls="<%= ingredientName %>Collapse"><%= drink["strMeasure"+(index+1)] %> <%= ingredientName %></p>
+                                                        <div class="collapse" id="<%= ingredientName %>Collapse">
+                                                            <div class="card card-body">
+                                                                <p><strong>ID:</strong> <%= ingredient.idIngredient %></p>
+                                                                <p><strong>Description:</strong> <%= ingredient.strDescription || 'N/A' %></p>
+                                                                <p><strong>Type:</strong> <%= ingredient.strType || 'N/A' %></p>
+                                                                <p><strong>Alcohol:</strong> <%= ingredient.strAlcohol || 'N/A' %></p>
+                                                                <p><strong>ABV:</strong> <%= ingredient.strABV || 'N/A' %></p>
+                                                            </div>
+                                                        </div>
+                                                    </li>
+                                                <% }); %>
                                             </ul>
                                         </p>
+                                    <% }else{ %>
+                                        <!-- Ingredients Section -->
+                                        <% const ingredients=[]; %>
+                                        <% Object.keys(drink).forEach(property=> { %>
+                                            <% if (drink[property] !==null && property.startsWith('strIngredient')) { %>
+                                                <% ingredients.push(drink[property]); %>
+                                            <% } %>
+                                        <% }) %>
+                                        <% if (ingredients.length>0) { %>
+                                            <p class="pt-1 mt-1 mb-2 display-6 lh-1">
+                                                <strong><em>Ingredients:</em></strong>
+                                                <ul>
+                                                    <% ingredients.forEach((ingredient, index)=> { %>
+                                                        <li><em><%= drink["strMeasure"+(index+1)] %> <%= ingredient %></em></li>
+                                                        <% }) %>
+    
+                                        <% } %>
                                     <% } %>
                                 </div>
                             </div>

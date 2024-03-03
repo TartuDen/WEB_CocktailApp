@@ -8,6 +8,7 @@ const baseUrl = "https://www.thecocktaildb.com/api/json/v1/1";
 const searchByLetter = "/search.php?f="
 const searchByID = "/lookup.php?i="
 const randomSearch = "/random.php"
+let ingredients = {};
 let dataForClient = null;
 let err = null;
 app.use(express.static("public"));
@@ -28,6 +29,7 @@ app.post("/search", async (req, res) => {
     err = null;
     let formReq = req.body["cocktail"];
     let category = req.body["category"];
+    ingredients = {};
     if (formReq.length === 1 && typeof formReq === 'string') {
         try {
             let response = await axios.get(baseUrl + searchByLetter + formReq)
@@ -51,6 +53,22 @@ app.post("/search", async (req, res) => {
             if (dataForClient.drinks === null) {
                 // Throw an error to redirect to the catch block
                 throw new Error('Wrong id...');
+            } else {
+                for (let i = 1; i < 11; i++) {
+                    let ingName = (dataForClient.drinks[0]["strIngredient" + i]);
+                    if (ingName !== null) {
+                        try {
+                            let ingDescription = await axios.get(baseUrl + "/search.php?i=" + ingName)
+                            // console.log("ingDescription");
+                            // console.log(baseUrl + "/search.php?i=" + ingName);
+                            // console.log(ingDescription.data);
+                            
+                            ingredients[ingName] = ingDescription.data["ingredients"]
+                        } catch{
+                            console.error("couldn't get ingredient");
+                        }
+                    }
+                }
             }
         } catch (error) {
             // Handle the error
@@ -60,6 +78,7 @@ app.post("/search", async (req, res) => {
         }
     } else {
 
+
         try {
             dataForClient = await axios.get(baseUrl + category + formReq)
             dataForClient = dataForClient.data
@@ -67,17 +86,16 @@ app.post("/search", async (req, res) => {
                 // Throw an error to redirect to the catch block
                 throw new Error('Wrong input...');
             }
-
-        } catch(error) {
+        } catch (error) {
             err = error
         }
-        
+
     }
     res.status(200).redirect("/");
 })
 
 app.get("/", (req, res) => {
-    res.status(200).render("index.ejs", { dataForClient, err });
+    res.status(200).render("index.ejs", { dataForClient, err, ingredients });
 })
 
 app.listen(port, (err) => {
