@@ -1,3 +1,17 @@
+body {
+    /* Use a linear gradient for the background */
+    background-image: linear-gradient(to top right, #ffb8b8, #b0b0ff); /* Gradient from red to blue */
+    /* Set the background size to cover the entire viewport */
+    background-size: cover;
+    /* Specify the animation */
+    animation: gradientAnimation 10s infinite alternate; /* 10 seconds duration, alternate direction, infinite loop */
+}
+
+/* Define the animation */
+@keyframes gradientAnimation {
+    0% { background-position: bottom left; } /* Start from bottom left */
+    100% { background-position: top right; } /* End at top right */
+}
 .container-top{
     display: flex;
     justify-content: center;
@@ -34,4 +48,30 @@ li {
 
 .hover-link:hover {
     color: rgb(188, 188, 188); /* Change text color to light gray on hover */
+}
+
+
+/* CSS to increase the size of input field and buttons */
+.container-top .form-control {
+    /* Increase the height of the input field */
+    height: 50px; /* Adjust the value as needed */
+    /* Increase the font size of the input text */
+    font-size: 20px; /* Adjust the value as needed */
+}
+
+.container-top .btn {
+    /* Increase the height of the button */
+    height: 50px; /* Adjust the value as needed */
+    /* Increase the font size of the button text */
+    font-size: 20px; /* Adjust the value as needed */
+    /* Add some padding to the button */
+    padding: 0 20px; /* Adjust the value as needed */
+}
+
+/* CSS to increase the size of input field and buttons */
+.col-auto input.form-control {
+    /* Increase the height of the input field */
+    height: 50px; /* Adjust the value as needed */
+    /* Increase the font size of the input text */
+    font-size: 20px; /* Adjust the value as needed */
 }

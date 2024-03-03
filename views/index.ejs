@@ -23,14 +23,13 @@
         <form class="row g-3" action="/search" method="post">
             <!-- Input Field for Cocktail Name -->
             <div class="col-auto">
-                <label for="cocktail" class="visually-hidden">Type the name of a cocktail here:</label>
                 <input type="text" class="form-control" id="cocktail" name="cocktail"
-                    placeholder="Type the name of a cocktail here">
+                    placeholder="Thirsty?">
             </div>
             <!-- Select Dropdown for Category -->
             <div class="col-auto">
                 <label for="category" class="visually-hidden">Select a category:</label>
-                <select class="form-select" id="category" name="category">
+                <select class="form-select" id="category" name="category" style="height: 50px;">
                     <option value="/search.php?s=">cocktail name</option>
                     <option value="/filter.php?i=">type of alcohol</option>
                     <option value="/search.php?i=">look up ingredient</option>
